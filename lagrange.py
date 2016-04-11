@@ -15,12 +15,12 @@ def lagrange(X, Y, x):
     '''
     y = 0
     n = len(X)
-    for i in range(0, n):
+    for i in range(n):
         l = 1.0
-        for j in range(0, n):
+        for j in range(n):
             if j != i:
-                l = l * (x - X[j]) / (X[i] - X[j])
-        y = y + Y[i] * l
+                l *= (x - X[j]) / (X[i] - X[j])
+        y += Y[i] * l
 
     return y
 
@@ -34,8 +34,10 @@ def test(n = 10):
     '''
     print 'n = %d 时' % n
     h = 10.0 / n
-    X = np.arange(-5, 5, h)
-    Y = [1.0 / (1 + x * x) for x in X]
+    X = np.arange(-5, 5, h).tolist()
+    X.append(5)
+    Y = [(1.0 / (1 + x * x)) for x in X]
+
     x = 4.8
 
     right = 1.0 / (1 + x * x)
