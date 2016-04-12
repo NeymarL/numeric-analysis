@@ -25,6 +25,7 @@ def fix_image(X, ld, u, Q1, Q2):
     New = X.copy()
     (m, n) = X.shape
     T = (2 * ld + 1) * (2 * ld + 1)
+    N = (T + 1) / 2
 
     for i in range(ld, m - ld):
         for j in range(ld, n - ld):
@@ -32,7 +33,7 @@ def fix_image(X, ld, u, Q1, Q2):
             A = w.reshape(-1)
             A.sort()
             delta = A - X[i, j]
-            omiga = delta.sum()
+            omiga = delta[0:N].sum()
             kesai = 0
             if(X[i, j] <= A[u] or X[i, j] >= A[T - u + 1]):
                 ita[i, j] = 1
@@ -45,13 +46,15 @@ def fix_image(X, ld, u, Q1, Q2):
             else:
                 Lambda[i, j] = 1
 
+
             New[i, j] = (1 - Lambda[i, j]) * X[i, j] +\
-                Lambda[i, j] * A[(T - 1) / 2 - 1]
+                Lambda[i, j] * A[T / 2]
 
-    return New
+    print Lambda.sum()
+    return 255 - New
 
-
-def add_gossian(img):
+'''
+def add_gaussian(img):
     param = 30
     # 灰阶范围
     grayscale = 256
@@ -74,19 +77,22 @@ def add_gossian(img):
             newimg[x, y+1, 2] = fxy1_val_2
 
     return newimg
+'''
 
+def test(ld = 1, u = 2, Q1 = 15, Q2 = 30):
+    img = plt.imread('pic.jpg')
 
-def test():
-    img = plt.imread('Sublime_text_256x256x32.png')
-
-    gassian = add_gossian(img)
-    plt.figure()
-    plt.imshow(gassian)
-
+    #gaussian = add_gaussian(img)
+    #plt.figure()
+    #plt.imshow(gassian)
+    new = np.zeros(img.shape)
     for i in range(img.shape[2]):
-        img[:, :, i] = fix_image(img[:, :, i], 1, 3, 15, 30)
+        new[:, :, i] = fix_image(img[:, :, i], ld, u, Q1, Q2)
 
-    return img
+    print (new - img).mean()
+
+    return new
 
 if __name__ == '__main__':
     img = test()
+
