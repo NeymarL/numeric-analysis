@@ -7,6 +7,7 @@
 import numpy as np
 import matplotlib.pylab as plt
 
+
 def fix_image(X, ld, u, Q1, Q2):
     '''
     计算每个点的受腐蚀程度, 并返回修复后的图像
@@ -25,15 +26,15 @@ def fix_image(X, ld, u, Q1, Q2):
     (m, n) = X.shape
     T = (2 * ld + 1) * (2 * ld + 1)
 
-    for i in range(ld, m - ld + 1):
-        for j in range(ld, n - ld + 1):
-            w = X[i - ld : i + ld + 1, j - ld : j + ld + 1]
+    for i in range(ld, m - ld):
+        for j in range(ld, n - ld):
+            w = X[i - ld: i + ld + 1, j - ld: j + ld + 1]
             A = w.reshape(-1)
             A.sort()
             delta = A - X[i, j]
             omiga = delta.sum()
             kesai = 0
-            if(X[i,j] <= A[u] or X[i,j] >= A[T - u + 1]):
+            if(X[i, j] <= A[u] or X[i, j] >= A[T - u + 1]):
                 ita[i, j] = 1
                 kesai = omiga / (T - 1)
 
@@ -49,8 +50,39 @@ def fix_image(X, ld, u, Q1, Q2):
 
     return New
 
+
+def add_gossian(img):
+    param = 30
+    # 灰阶范围
+    grayscale = 256
+    w = img.shape[1]
+    h = img.shape[0]
+    newimg = np.zeros((h, w, 3), np.uint8)
+
+    for x in xrange(0, h):
+        for y in xrange(0, w, 2):
+            r1 = np.random.random_sample()
+            r2 = np.random.random_sample()
+            z1 = param*np.cos(2*np.pi*r2)*np.sqrt((-2)*np.log(r1))
+            z2 = param*np.sin(2*np.pi*r2)*np.sqrt((-2)*np.log(r1))
+
+            newimg[x, y, 0] = fxy_val_0
+            newimg[x, y, 1] = fxy_val_1
+            newimg[x, y, 2] = fxy_val_2
+            newimg[x, y+1, 0] = fxy1_val_0
+            newimg[x, y+1, 1] = fxy1_val_1
+            newimg[x, y+1, 2] = fxy1_val_2
+
+    return newimg
+
+
 def test():
-    img = plt.imread('Sublime_text_256x256x32_Fotor.png')
+    img = plt.imread('Sublime_text_256x256x32.png')
+
+    gassian = add_gossian(img)
+    plt.figure()
+    plt.imshow(gassian)
+
     for i in range(img.shape[2]):
         img[:, :, i] = fix_image(img[:, :, i], 1, 3, 15, 30)
 
@@ -58,5 +90,3 @@ def test():
 
 if __name__ == '__main__':
     img = test()
-
-
