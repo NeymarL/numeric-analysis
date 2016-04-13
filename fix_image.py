@@ -3,9 +3,10 @@
 # fix_image.py
 # 图像修复、降噪
 
-#from scipy import signal
+
 import numpy as np
 import matplotlib.pylab as plt
+import random as rd
 
 
 def fix_image(X, ld, u, Q1, Q2):
@@ -63,22 +64,33 @@ def fix_image(X, ld, u, Q1, Q2):
     print Lambda.sum()
     return X
 
+def generate_random_file_name():
+    filename = ''
+    for i in range(5):
+        filename += str(rd.randint(0, 9))
 
-def test(ld = 2, u = 8, Q1 = 0.05, Q2 = 0.1):
-    img = plt.imread('test/Sublime_text_256x256x32副本.png')
+    return filename
 
-    plt.figure()
-    plt.imshow(img)
 
-    plt.figure()
+def run(ld = 2, u = 8, Q1 = 0.05, Q2 = 0.1, img = ''):
+    if not img:
+        img = plt.imread('test/Sublime_text_256x256x32副本.png')
+    else:
+        img = plt.imread(img)
+
+    #plt.figure()
+    #plt.imshow(img)
+
+    #plt.figure()
     new = np.zeros(img.shape)
     for i in range(img.shape[2]):
         new[:, :, i] = fix_image(img[:, :, i], ld, u, Q1, Q2)
 
-    plt.imshow(new)
-
-    return new
+    #plt.imshow(new)
+    filename = generate_random_file_name()
+    plt.imwrite('temp/' + filename, new)
+    return 'temp/' + filename
 
 if __name__ == '__main__':
-    img = test()
+    img = run()
 
