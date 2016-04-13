@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import sys
+import sys, os
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
@@ -28,7 +28,9 @@ def upload_file():
     global img
     file = request.files['upl']
     if file and allowed_file(file.filename):
-        img = file.read()
+        img = file.filename
+        file.save('static/temp/' + img)
+        img = 'static/temp/' + img
     else:
         return render_template('error.html', message='文件格式错误，请上传[jpg|png|jepg|gif]格式的文件')
 
@@ -39,6 +41,11 @@ def run():
     global img
     if not img:
         return render_template('error.html', message='请上传文件')
+    new = fix_image.run_fix(ld = 2, u = 8, Q1 = 0.05, Q2 = 0.1, img = img)
+    extension = img.rsplit('.', 1)[1]
+    new += '.' + extension
+    old = img
+    return render_template('result.html', old=old, new=new)
 
 
 

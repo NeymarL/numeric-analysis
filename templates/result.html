@@ -1,91 +1,67 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>在线C语言代码复制/相似度检测平台</title>
-<script src="{{ url_for('static', filename='js/chart/Chart.js')}}"></script>
-<link href="{{ url_for('static', filename='css/chart/style.css')}}" rel="stylesheet" type="text/css" media="all" />
-<script type='text/javascript' src="{{ url_for('static', filename='js/chart/jquery-1.11.2.min.js')}}"></script>
-<link href='//fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
-<link href='//fonts.googleapis.com/css?family=Cabin:400,400italic,500,500italic,600,700,700italic,600italic' rel='stylesheet' type='text/css'>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="在线C语言代码复制/相似度检测平台" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<style>
-.btn{
-    width:25%;
-    background-color: #0259A0;
-    border: none;
-    padding: 11px 9px 11px 9px;
-    border-radius: 3px;
-    color: #FFF;
-    font-family: calibri;
-    font-size:18px;
-    outline: none;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-    margin-left: 50%; 
-}
-</style>
-
-</head>
-<body>
-<div class="main">
-    <h1>检测结果</h1>
-    <div class="line_chart stack_bar">
-            <div class="line_left">
-                <h3>{{summary}}</h3>
-            </div>
-            <div class="clear"> </div>
-    </div>
-    <div class="area_chart">
-        {% for row in rows %}
-            {% if loop.index % 2 == 1 %}
-                <div class="area_chart_left">
-            {% else %}
-                <div class="area_chart_right">
-            {% endif %}
-                <div class="area_chart_left_main">
-                    <div class="area_chart_left_l">
-                        <h3>{{ row.split('\t')[0] }}</h3>
-                    </div>
-                    <div class="area_chart_left_r">
-                        <ul>
-                            <li class="lab1">{{ row.split('\t')[1] }}</li>
-                        </ul>
-                    </div>
-                    <div class="clear"> </div>
-                </div>
-                <canvas id="pie{{loop.index}}" height="300" width="500" style="width: 500px; height: 300px;"></canvas>
-                 <script>
-                    var pieData = [
-                            {
-                                value: 100-{{ row.split('\t')[1] }},
-                                color:"#e5e8eb"
-                            },
+    <head>
+        <title>在在线图片降噪、修复平台</title>
+        <script src="{{ url_for('static', filename='js/chart/Chart.js')}}"></script>
+        <link href="{{ url_for('static', filename='css/chart/style.css')}}" rel="stylesheet" type="text/css" media="all" />
+        <script type='text/javascript' src="{{ url_for('static', filename='js/chart/jquery-1.11.2.min.js')}}"></script>
+        <link href='//fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Cabin:400,400italic,500,500italic,600,700,700italic,600italic' rel='stylesheet' type='text/css'>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="在在线图片降噪、修复平台" />
+        <link href="{{ url_for('static', filename='css/jquery-ui-1.10.3.custom.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ url_for('static', filename='css/optimizilla.css') }}" rel="stylesheet" type="text/css">
+        <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+        <style>
+        .btn{
+        width:25%;
+        background-color: #0259A0;
+        border: none;
+        padding: 11px 9px 11px 9px;
+        border-radius: 3px;
+        color: #FFF;
+        font-family: calibri;
+        font-size:18px;
+        outline: none;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        margin-left: 45%;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <h1>修复结果</h1>
+            <div id="content" style="display: block;">
+            <div id="panel">
+                <div class="preview" id="original-preview">
+                    <div id="original-preview-info">原图片</div>
+                    <div id="original-preview-frame">
+                        <div id="original-preview-progress" style="display: none;"></div>
+                        <div id="original-preview-image" class="noSel smooth_zoom_preloader" style="position: relative; overflow: hidden; text-align: left; -webkit-user-select: none; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); width: 354px; height: 348px; background-image: none; background-color: transparent; background-position: 50% 50%; background-repeat: no-repeat;">
+                            <img src="{{ old }}" galleryimg="no" style="display: inline; left: 26px; top: 47px; width: 302px; height: 254px; transform-origin: 0px 0px 0px; backface-visibility: hidden; perspective: 1000px; position: absolute; z-index: 2; box-shadow: rgba(0, 0, 0, 0) 1px 1px;">
                             
-                            {
-                                value : {{ row.split('\t')[1] }},
-                                color : "#2bbfba"
-                            }
-                        
-                        ];
-                        new Chart(document.getElementById("pie{{loop.index}}").getContext("2d")).Pie(pieData);
-                </script>
-            </div>
-            {% if loop.index % 2 == 0 %}
-                <div class="clear"> </div>
-            {% endif %}
-        {% endfor %}
-        </div>
-    </div>
-
-</div>
-
-    <div class="clear"></div>
-<br><br>
-<a class="btn" href="/">返回首页</a>
-
-</body>
-</html>
+                                                
+                        </div></div>
+                            </div>
+                            <div class="preview" id="png-preview">
+                                <div id="png-preview-info">处理后</div>
+                                <div id="png-preview-frame">
+                                    <div id="png-preview-progress" style="display: none;"></div>
+                                    <div id="png-preview-image" class="noSel smooth_zoom_preloader" style="position: relative; overflow: hidden; text-align: left; -webkit-user-select: none; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); width: 354px; height: 348px; background-image: none; background-color: transparent; background-position: 50% 50%; background-repeat: no-repeat;"><img src="{{ new }}" galleryimg="no" style="display: inline; transform-origin: 0px 0px 0px; backface-visibility: hidden; perspective: 1000px; position: absolute; z-index: 2; left: 26px; top: 47px; box-shadow: rgba(0, 0, 0, 0) 1px 1px; width: 302px; height: 254px;">                   </div></div></div></div>
+                                </div>
+                            </div>
+    
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <a class="btn" href="/">返回首页</a>
+                </div>
+                <div class="clear"></div>
+                <br><br>
+                
+            </body>
+        </html>

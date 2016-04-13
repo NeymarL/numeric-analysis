@@ -55,13 +55,15 @@ def fix_image(X, ld, u, Q1, Q2):
             X[i, j] = (1 - Lambda[i, j]) * X[i, j] +\
                 Lambda[i, j] * A[(T - 4) / 2]
 
+            '''
             if i == 162 and j == 44:
                 print Lambda[i, j], '\t', w, '\n', A[T / 2]
                 print 'omiga = ', omiga, '\t', 'kesai = ', kesai
                 print 'A[T - u + 1] = ', A[T - u + 1]
                 print 'X[i,j] = ', X[i, j]
+            '''
 
-    print Lambda.sum()
+    #print Lambda.sum()
     return X
 
 def generate_random_file_name():
@@ -72,11 +74,14 @@ def generate_random_file_name():
     return filename
 
 
-def run(ld = 2, u = 8, Q1 = 0.05, Q2 = 0.1, img = ''):
+def run_fix(ld = 2, u = 8, Q1 = 0.05, Q2 = 0.1, img = ''):
     if not img:
         img = plt.imread('test/Sublime_text_256x256x32副本.png')
     else:
         img = plt.imread(img)
+
+    if img.max() >= 200:
+        img /= 255.0
 
     #plt.figure()
     #plt.imshow(img)
@@ -88,8 +93,8 @@ def run(ld = 2, u = 8, Q1 = 0.05, Q2 = 0.1, img = ''):
 
     #plt.imshow(new)
     filename = generate_random_file_name()
-    plt.imwrite('temp/' + filename, new)
-    return 'temp/' + filename
+    plt.imsave('static/temp/' + filename, new)
+    return 'static/temp/' + filename
 
 if __name__ == '__main__':
     img = run()
