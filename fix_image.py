@@ -76,7 +76,7 @@ def generate_random_file_name():
 
 def run_fix(ld = 2, u = 8, Q1 = 0.05, Q2 = 0.1, img = ''):
     if not img:
-        img = plt.imread('test/Sublime_text_256x256x32副本.png')
+        img = plt.imread('test/Sublime_text.png')
     else:
         img = plt.imread(img)
 
