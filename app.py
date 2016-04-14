@@ -48,8 +48,7 @@ def run():
     if not img:
         return render_template('error.html', message='请上传文件')
     new = fix_image.run_fix(ld = 2, u = 8, Q1 = 0.05, Q2 = 0.1, img = img)
-    extension = img.rsplit('.', 1)[1]
-    new += '.' + extension
+    new += '.png'
     old = img
     return render_template('result.html', old=old, new=new)
 
