@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>在在线图片降噪、修复平台</title>
+        <link href="{{ url_for('static', filename='css/chart/style_lag.css')}}" rel="stylesheet" type="text/css" media="all" />
+        <script type='text/javascript' src="{{ url_for('static', filename='js/chart/jquery-1.11.2.min.js')}}"></script>
+        <link href='/static/fonts/Oxygen.css' rel='stylesheet' type='text/css'>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="在在线图片降噪、修复平台" />
+        <style>
+        .btn{
+            width:25%;
+            background-color: #0259A0;
+            border: none;
+            padding: 11px 9px 11px 9px;
+            border-radius: 3px;
+            color: #FFF;
+            font-family: calibri;
+            font-size:18px;
+            outline: none;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            margin-left: 45%;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <h1>Lagrange插值实验</h1>
+            <br>
+            <hr>
+            <p>对[-5,5]作等距分划xi=-5+ih,h=10/n,i=0,1,...,n, 并对Runge给出的函数 y = 1 作Lagrange插值,取n=10,20计算插值多项式 Pn(x) 在 x=4.8处的误差,并作分析。</p>
+            <hr>
+            <br>
+
+            <table border="1" cellpadding="10" cellspacing="20" style="margin-left:30%;">
+                <h2 style="text-align: center">插值结果</h2>
+                <tr>
+                    <th>n</th>
+                    <th>插值结果</th>
+                    <th>精确解</th>
+                    <th>误差</th>
+                </tr>
+                <tr>
+                    <th>10</th>
+                    <th>{{ result1 }}</th>
+                    <th>{{ right1 }}</th>
+                    <th>{{ error1 }}</th>
+                </tr>
+                <tr>
+                    <th>20</th>
+                    <th>{{ result2 }}</th>
+                    <th>{{ right2 }}</th>
+                    <th>{{ error2 }}</th>
+                </tr>
+
+            </table>
+            <br><br>
+            <a class="btn" href="/">返回首页</a>
+        </div>
+    </body>

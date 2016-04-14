@@ -51,6 +51,8 @@ def test(n = 10):
     print '精确结果为 ', right
     print '绝对误差为 ', error
 
+    return [l, right, error]
+
 
 if __name__ == '__main__':
     test(10)

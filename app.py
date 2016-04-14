@@ -35,6 +35,12 @@ def upload_file():
         return render_template('error.html', message='文件格式错误，请上传[jpg|png|jepg|gif]格式的文件')
 
 
+@app.route('/lagrange', methods=['GET'])
+def Lagrange():
+    res1 = lagrange.test(10)
+    res2 = lagrange.test(20)
+    return render_template('lagrange.html', result1=res1[0], right1=res1[1],
+        error1=res1[2], result2=res2[0],  right2=res2[1], error2=res2[2])
 
 @app.route('/run', methods=['GET'])
 def run():
