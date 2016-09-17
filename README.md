@@ -1,3 +1,5 @@
-# 在线图像降噪、压缩平台
+# 数值分析实验
 
-http://na.liuhe.website
+在线图片降噪应用的服务端代码。
+
+Online picture noise reduction application.
